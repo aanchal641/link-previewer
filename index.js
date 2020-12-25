@@ -7,13 +7,12 @@ const generatePreview = async (url) => {
     .then(function (html) {
       let response = {};
       response = getHTMLTags(html);
-      response.og = getOGTags(html);
-      response.twitter = getTwitterTags(html);
-      console.log(response);
+      response.og = getOGTags(html,url);
+      response.twitter = getTwitterTags(html,url);
       return response;
     })
     .catch(function (err) {
-
+      throw err;
     });
 }
 
@@ -25,19 +24,19 @@ const getHTMLTags = (html) => {
     description: ""
   };
 
-  let title = xpath
+  const title = xpath
     .fromPageSource(html)
     .findElements("//title");
 
   response.title = title[0] ? title[0].getText() : "";
 
-  let name = xpath
+  const name = xpath
     .fromPageSource(html)
     .findElements("//meta[@name='name']");
 
   response.name = getContentAttribute(name);
 
-  let description = xpath
+  const description = xpath
     .fromPageSource(html)
     .findElements("//meta[@name='description']");
 
@@ -47,7 +46,7 @@ const getHTMLTags = (html) => {
 }
 
 const getOGTags = (html) => {
-  let og = {
+  const og = {
     title: "",
     image: "",
     description: "",
@@ -55,7 +54,7 @@ const getOGTags = (html) => {
     site_name: ""
   };
 
-  let title = xpath
+  const title = xpath
     .fromPageSource(html)
     .findElements("//meta[@property='og:title']");
 
@@ -66,21 +65,22 @@ const getOGTags = (html) => {
     .fromPageSource(html)
     .findElements("//meta[@property='og:image']");
 
-  og.image = getContentAttribute(image);
+  image = getContentAttribute(image);
+  og.image = createAbsolutePathForImage(image);
 
-  let description = xpath
+  const description = xpath
     .fromPageSource(html)
     .findElements("//meta[@property='og:description']");
 
   og.description = getContentAttribute(description);
 
-  let url = xpath
+  const url = xpath
     .fromPageSource(html)
     .findElements("//meta[@property='og:url']");
 
   og.url = getContentAttribute(url);
 
-  let site_name = xpath
+  const site_name = xpath
     .fromPageSource(html)
     .findElements("//meta[@property='og:site_name']");
 
@@ -90,14 +90,14 @@ const getOGTags = (html) => {
 }
 
 const getTwitterTags = (html) => {
-  let twitter = {
+  const twitter = {
     title: "",
     image: "",
     description: "",
     url: ""
   };
 
-  let title = xpath
+  const title = xpath
     .fromPageSource(html)
     .findElements("//meta[@property='twitter:title']");
 
@@ -108,15 +108,16 @@ const getTwitterTags = (html) => {
     .fromPageSource(html)
     .findElements("//meta[@property='twitter:image']");
 
-  twitter.image = getContentAttribute(image);
+  image = getContentAttribute(image);
+  twitter.image = createAbsolutePathForImage(image);
 
-  let description = xpath
+  const description = xpath
     .fromPageSource(html)
     .findElements("//meta[@property='twitter:description']");
 
   twitter.description = getContentAttribute(description);
 
-  let url = xpath
+  const url = xpath
     .fromPageSource(html)
     .findElements("//meta[@property='twitter:url']");
 
@@ -135,5 +136,22 @@ const getContentAttribute = (element) => {
   }
   return content;
 }
+
+const createAbsolutePathForImage = (imagelink,url) => {
+  let imageUrl = imagelink;
+  if((imagelink.indexOf('https')) != -1 || (imagelink.indexOf('http')) != -1){
+    const baseUrl = getBaseUrl(url);
+    imageUrl = baseUrl + imagelink;
+  }
+  return imageUrl;
+}
+
+const getBaseUrl = (url) => {  
+  let urls = url.split('/');
+  urls = urls.slice(0,3);
+  const baseUrl = urls.join('/');
+  return baseUrl;
+}
+
 
 module.exports = { generatePreview };
