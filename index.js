@@ -11,7 +11,7 @@ const generatePreview = async (url) => {
       response.twitter = getTwitterTags(html,url);
       return response;
     })
-    .catch(function (err) {
+    .catch(function (err) {      
       throw err;
     });
 }
@@ -126,12 +126,13 @@ const getTwitterTags = (html) => {
   return twitter;
 }
 
-const getContentAttribute = (element) => {
+const getContentAttribute = (elements) => {
   let content = "";
-  if (element[0] && element[0].attributes) {
-    for (var key in element[0].attributes) {
-      if (element[0].attributes[key].name == 'content')
-        content = element[0].attributes[key].value;
+  const element = elements[0];
+  if (element && element.attributes) {
+    for (var key in element.attributes) {
+      if (element.attributes[key].name == 'content')
+        content = element.attributes[key].value;
     }
   }
   return content;
@@ -152,6 +153,5 @@ const getBaseUrl = (url) => {
   const baseUrl = urls.join('/');
   return baseUrl;
 }
-
 
 module.exports = { generatePreview };
