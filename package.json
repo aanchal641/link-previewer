@@ -1,0 +1,16 @@
+{
+  "name": "linkpreviewer",
+  "version": "1.0.0",
+  "description": "Generates the preview of the provided url. Returns og and twitter tags alongwith website title,description",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Aanchal",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
+    "xpath-html": "^1.0.2"
+  }
+}
