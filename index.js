@@ -3,7 +3,7 @@ const xpath = require("xpath-html");
 
 
 const generatePreview = async (url) => {
-  requestPromise(url)
+  return requestPromise(url)
     .then(function (html) {
       let response = {};
       response = getHTMLTags(html);
