@@ -23,21 +23,21 @@ const url = "https://one9x.com";
 
 ```JSON
 {
-    title: 'Welcome to One9x | One9x',
-    name: '',
-    description: 'Website of One9x organization',
-    og: {
-        title: 'Welcome to One9x',
-        image: '',
-        description: 'Website of One9x organization',
-        url: 'http://one9x.com/',
-        site_name: 'One9x'
+    "title": "Welcome to One9x | One9x",
+    "name": "",
+    "description": "Website of One9x organization",
+    "og": {
+        "title": "Welcome to One9x",
+        "image": "",
+        "description": "Website of One9x organization",
+        "url": "http://one9x.com/",
+        "site_name": "One9x"
     },
-    twitter: {
-        title: '',
-        image: '',
-        description: '',
-        url: ''
+    "twitter": {
+        "title": "",
+        "image": "",
+        "description": "",
+        "url": ""
     }
 }
 ```
