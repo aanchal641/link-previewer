@@ -1,5 +1,5 @@
 {
-  "name": "linkpreviewer",
+  "name": "link-previewer",
   "version": "1.0.0",
   "description": "Generates the preview of the provided url. Returns og and twitter tags alongwith website title,description",
   "main": "index.js",
